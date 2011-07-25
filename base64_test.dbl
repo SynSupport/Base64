@@ -1,0 +1,26 @@
+main
+
+    external function
+        base64_encode ,a
+
+    record
+        text        ,a* ,'This is a test string to be encoded'
+        encoded_len ,i4
+        encoded     ,a1000
+
+proc
+    open(1, O, 'TT:')
+
+    encoded = %base64_encode(text, encoded_len)
+
+    writes(1, "String = "+text)
+    writes(1, "Length = "+%string(%trim(text)))
+
+    writes(1, "Encoded string = "+encoded(1:encoded_len))
+    writes(1, "Encoded length = "+%string(encoded_len))
+
+.ifdef DBLNET
+    StopMessage()
+.endc ;DBLNET
+    stop D_EXIT_SUCCESS
+end
